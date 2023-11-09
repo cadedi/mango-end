@@ -3,7 +3,6 @@ package com.github.cadedi;
 import com.github.cadedi.dao.SysConfigMapper;
 import com.github.cadedi.model.SysConfig;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,6 +6,49 @@ spring:
     url: jdbc:mysql://localhost:3306/mango?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
     username: root
     password: 123456
-#  mvc:
-#    pathmatch:
-#      matching-strategy: ant_path_matcher
+    name: druidDateSource
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      url: jdbc:mysql://localhost:3306/mango?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+#      username: root
+#      password: 123456
+      filters: stat,wall,slf4j,config
+      max-active: 100
+      initial-size: 1
+      max-wait: 60000
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 20
+      max-pool-prepared-statement-per-connection-size: 20
+      aop-patterns: "com.github.cadedi.dao.*" # Spring监控AOP切入点,多个时用英文逗号分隔,必须引入spring-aop依赖
+      # 配置已开启的 filters
+      filter:
+        #配置StatFilter (SQL监控配置)
+        stat:
+          enabled: true  #开启 SQL 监控
+          slow-sql-millis: 1000  #慢查询
+          log-slow-sql: true  #记录慢查询 SQL
+        #配置WallFilter (防火墙配置)
+        wall:
+          enabled: true #开启防火墙
+          config:
+            update-allow: true  #允许更新操作
+            drop-table-allow: false #禁止删表操作
+            insert-allow: true #允许插入操作
+            delete-allow: true
+        #配置日志输出
+        slf4j:
+          enabled: true
+          statement-create-after-log-enabled: false
+          statement-close-after-log-enabled: false
+          result-set-open-after-log-enabled: false
+          result-set-close-after-log-enabled: false
+
+
