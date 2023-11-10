@@ -33,4 +33,9 @@ public interface SysUserMapper {
      * 查询全部
      */
     List<SysUser> findAll();
+
+    /**
+     * 分页查询
+     */
+    List<SysUser> findPage();
 }

@@ -1,9 +1,9 @@
 package com.github.cadedi.admin.controller;
 
 import com.github.cadedi.admin.service.SysUserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.github.cadedi.core.http.HttpResult;
+import com.github.cadedi.core.page.PageRequest;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -17,5 +17,11 @@ public class SysUserController {
     @GetMapping("findAll")
     public Object findAll() {
         return sysUserService.findAll();
+    }
+
+
+    @PostMapping("/findPage")
+    public HttpResult findPage(@RequestBody PageRequest pageRequest){
+        return HttpResult.ok(sysUserService.findPage(pageRequest));
     }
 }

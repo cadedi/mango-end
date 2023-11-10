@@ -240,7 +240,12 @@
     <include refid="Base_Column_List"></include>
     from sys_user
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+    <select id="findPage"  resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List"></include>
+      from sys_user
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
     update sys_user
     <set>
       <if test="record.id != null">
