@@ -28,7 +28,6 @@ public interface SysUserMapper {
 
     int updateByPrimaryKey(SysUser record);
 
-
     /**
      * 查询全部
      */
@@ -36,6 +35,13 @@ public interface SysUserMapper {
 
     /**
      * 分页查询
+     * service调用pageHelper后,mapper的返回类型被修改为分页对象PageInfo
      */
     List<SysUser> findPage();
+
+    SysUser findByName(@Param(value="name") String name);
+
+    List<SysUser> findPageByName(@Param(value="name") String name);
+
+    List<SysUser> findPageByNameAndEmail(@Param(value="name") String name, @Param(value="email") String email);
 }

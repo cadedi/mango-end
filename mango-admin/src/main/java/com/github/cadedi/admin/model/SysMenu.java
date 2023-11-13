@@ -2,6 +2,7 @@ package com.github.cadedi.admin.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 
@@ -71,6 +72,39 @@ public class SysMenu implements Serializable {
      * 是否删除  -1：已删除  0：正常
      */
     private Byte delFlag;
+
+    // 非数据库字段
+    private String parentName;
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public List<SysMenu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<SysMenu> children) {
+        this.children = children;
+    }
+
+    // 非数据库字段
+    private Integer level;
+
+    // 非数据库字段
+    private List<SysMenu> children;
 
     private static final long serialVersionUID = 1L;
 

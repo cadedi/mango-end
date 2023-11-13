@@ -27,4 +27,8 @@ public interface SysUserRoleMapper {
     int updateByPrimaryKeySelective(SysUserRole record);
 
     int updateByPrimaryKey(SysUserRole record);
+
+    List<SysUserRole> findUserRoles(@Param(value="userId") Long userId);
+
+    int deleteByUserId(@Param(value="userId") Long userId);
 }

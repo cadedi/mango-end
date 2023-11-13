@@ -27,4 +27,8 @@ public interface SysDeptMapper {
     int updateByPrimaryKeySelective(SysDept record);
 
     int updateByPrimaryKey(SysDept record);
+
+    List<SysDept> findPage();
+
+    List<SysDept> findAll();
 }

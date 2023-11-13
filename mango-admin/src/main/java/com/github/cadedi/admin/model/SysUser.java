@@ -1,12 +1,15 @@
 package com.github.cadedi.admin.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 
  */
 public class SysUser implements Serializable {
+
     /**
      * 编号
      */
@@ -81,6 +84,15 @@ public class SysUser implements Serializable {
      * 是否删除  -1：已删除  0：正常
      */
     private Byte delFlag;
+
+    // 非数据库字段
+    private String deptName;
+
+    // 非数据库字段
+    private String roleNames;
+
+    // 非数据库字段
+    private List<SysUserRole> userRoles = new ArrayList<>();
 
     private static final long serialVersionUID = 1L;
 
@@ -203,6 +215,31 @@ public class SysUser implements Serializable {
     public void setDelFlag(Byte delFlag) {
         this.delFlag = delFlag;
     }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public String getRoleNames() {
+        return roleNames;
+    }
+
+    public void setRoleNames(String roleNames) {
+        this.roleNames = roleNames;
+    }
+
+    public List<SysUserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<SysUserRole> userRoles) {
+        this.userRoles = userRoles;
+    }
+
 
     @Override
     public boolean equals(Object that) {

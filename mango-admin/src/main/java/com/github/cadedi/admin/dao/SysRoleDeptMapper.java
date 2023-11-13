@@ -1,5 +1,6 @@
 package com.github.cadedi.admin.dao;
 
+import com.github.cadedi.admin.model.SysRole;
 import com.github.cadedi.admin.model.SysRoleDept;
 import com.github.cadedi.admin.model.SysRoleDeptExample;
 import java.util.List;
@@ -27,4 +28,5 @@ public interface SysRoleDeptMapper {
     int updateByPrimaryKeySelective(SysRoleDept record);
 
     int updateByPrimaryKey(SysRoleDept record);
+
 }

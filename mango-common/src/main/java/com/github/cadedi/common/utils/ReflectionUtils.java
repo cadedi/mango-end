@@ -1,4 +1,4 @@
-package com.github.cadedi.utils;
+package com.github.cadedi.common.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

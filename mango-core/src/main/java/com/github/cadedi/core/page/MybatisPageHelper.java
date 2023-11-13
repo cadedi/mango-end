@@ -1,6 +1,6 @@
 package com.github.cadedi.core.page;
 
-import com.github.cadedi.utils.ReflectionUtils;
+import com.github.cadedi.common.utils.ReflectionUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -32,7 +32,7 @@ public class MybatisPageHelper {
      * @param args 方法参数
      * @return PageResult 分页结果
      */
-    private static PageResult findPage(PageRequest pageRequest, Object mapper, String queryMethodName,Object... args) {
+    public static PageResult findPage(PageRequest pageRequest, Object mapper, String queryMethodName, Object... args) {
         //设置分页参数
         int pageNum = pageRequest.getPageNum();
         int pageSize = pageRequest.getPageSize();

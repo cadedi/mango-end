@@ -1,5 +1,6 @@
 package com.github.cadedi.admin.dao;
 
+import com.github.cadedi.admin.model.SysLog;
 import com.github.cadedi.admin.model.SysLoginLog;
 import com.github.cadedi.admin.model.SysLoginLogExample;
 import java.util.List;
@@ -27,4 +28,10 @@ public interface SysLoginLogMapper {
     int updateByPrimaryKeySelective(SysLoginLog record);
 
     int updateByPrimaryKey(SysLoginLog record);
+
+    List<SysLog> findPage();
+
+    List<SysLog> findPageByUserName(@Param(value="userName") String userName);
+
+    List<SysLog> findPageByStatus(@Param(value="status") String status);
 }

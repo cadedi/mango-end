@@ -2,6 +2,7 @@ package com.github.cadedi.admin.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 
@@ -51,6 +52,39 @@ public class SysDept implements Serializable {
      * 是否删除  -1：已删除  0：正常
      */
     private Byte delFlag;
+
+    // 非数据库字段
+    private List<SysDept> children;
+
+    // 非数据库字段
+    private String parentName;
+
+    // 非数据库字段
+    private Integer level;
+
+    public List<SysDept> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<SysDept> children) {
+        this.children = children;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     private static final long serialVersionUID = 1L;
 
