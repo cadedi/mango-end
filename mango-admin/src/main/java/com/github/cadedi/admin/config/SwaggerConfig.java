@@ -10,12 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.*;
 import springfox.documentation.oas.annotations.EnableOpenApi;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
+import springfox.documentation.schema.ModelRef;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -33,11 +31,24 @@ import java.util.List;
 public class SwaggerConfig {
     @Bean
     public Docket getDocket(){
+        // 添加请求参数，把token作为请求头部参数传入后端(配置spring security后必需)
+        RequestParameterBuilder parameterBuilder = new RequestParameterBuilder();
+        List<RequestParameter> parameters = new ArrayList<RequestParameter>();
+        //spring security
+        // parameterBuilder.name("token").description("令牌")
+        //         .modelRef(new ModelRef("string")).parameterType(ParameterType.HEADER).required(false).build();
+        // parameters.add(parameterBuilder.build());
+        parameterBuilder.name("token").description("令牌").in(ParameterType.HEADER).required(false).build();
+        parameters.add(parameterBuilder.build());
+
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(getApiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.github.cadedi.controller"))
-                .build();
+                // .apis(RequestHandlerSelectors.basePackage("com.github.cadedi.controller"))
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build()
+                .globalRequestParameters(parameters);
     }
     public ApiInfo getApiInfo(){
         Contact contact = new Contact("Fox", "https://hugesoft.com", "fox@inlook.com");
