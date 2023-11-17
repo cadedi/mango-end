@@ -86,10 +86,10 @@ public class JwtTokenUtils implements Serializable {
         Authentication authentication = null;
         // 获取请求携带的令牌
         String token = JwtTokenUtils.getToken(request);
+        // 请求令牌不能为空
         if(token != null) {
-            // 请求令牌不能为空
+            // 上下文中Authentication为空
             if(SecurityUtils.getAuthentication() == null) {
-                // 上下文中Authentication为空
                 Claims claims = getClaimsFromToken(token);
                 if(claims == null) {
                     return null;

@@ -26,6 +26,14 @@ public class SecurityUtils {
         JwtAuthenticatioToken token = new JwtAuthenticatioToken(username, password);
         token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         // 执行登录认证过程
+        //authenticationManager.authenticate 会调用UserDetailsServiceImpl#loadUserByUsername的逻辑
+/*        AuthenticationManager的默认实现类是ProviderManager,其中authenticate调用AuthenticationProvider的authenticate方法完成认证
+        可定制 AuthenticationProvider 可以完成各种自定义的需求
+        Spring Security 提供了多个默认的 AuthenticationProvider 实现
+        默认情况下，Spring Security 使用 DaoAuthenticationProvider 作为主要的身份验证提供者(可以继承扩展)。
+        它使用 UserDetailsService 加载用户详细信息并进行身份验证
+        UserDetailsService的实现类(一般是自定义继承扩展的)在配置类的configure(AuthenticationManagerBuilder auth)中配置
+        UserDetailsService 加载好用户认证信息后会封装认证信息到一个 UserDetails 的实现类(默认实现是 User 类,可以继承扩展)*/
         Authentication authentication = authenticationManager.authenticate(token);
         // 认证成功存储认证信息到上下文
         SecurityContextHolder.getContext().setAuthentication(authentication);

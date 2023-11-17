@@ -54,6 +54,12 @@ public class SysLoginController {
 
     /**
      * 登录接口
+     * 在该写法中,登录接口手动触发登录流程并生产令牌
+     *
+     * 第二种写法(二选一):
+     * 也可以在security的配置类中http.addFilterBefore配置继承UsernamePasswordAuthenticationFilter的登录认证流程过滤器
+     * (不过就不能通过@RequestBody 获取post表单的账号密码信息,必需读写request.getInputStream()读取请求体再解析)
+     * 同时,配置类要.and().formLogin().loginProcessingUrl("/login")指示哪个是登录接口,不过不配置的话默认拦截/login
      */
     @ApiOperation(value = "登录")
     @PostMapping(value = "/login")
@@ -80,6 +86,7 @@ public class SysLoginController {
         if (user.getStatus() == 0){
             return HttpResult.error("账号已被锁定,请联系管理员");
         }
+        //未配置放行的所有接口必须携带该token访问（header：{‘token’：token值}）验证权限，否则无法访问
         JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
         return HttpResult.ok(token);
 
