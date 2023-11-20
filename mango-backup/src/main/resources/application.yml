@@ -10,14 +10,25 @@ spring:
         url: "http://localhost:8000"
         # 启用开关
         #enabled: false
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name} #注册到consul的服务名称
+
 # 配置spring-admin监控客户端,默认不开放监控检查接口,以下配置全部开放
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  endpoint:
+    health:
+      show-details: always
 
-# backup datasource
+
+# backup datasource配置
 mango:
   backup:
     datasource:

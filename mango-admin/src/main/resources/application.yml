@@ -1,6 +1,8 @@
 server:
   port: 8001
 spring:
+  application:
+    name: mango-admin
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/mango?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
@@ -57,6 +59,14 @@ spring:
         url: "http://localhost:8000"
         # 启用开关
         #enabled: false
+  #consul配置
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name} #注册到consul的服务名称
+
 # 配置spring-admin监控客户端,默认不开放监控检查接口,以下配置全部开放
 management:
   endpoints:
