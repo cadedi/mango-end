@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8001
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -50,6 +50,17 @@ spring:
           statement-close-after-log-enabled: false
           result-set-open-after-log-enabled: false
           result-set-close-after-log-enabled: false
+  boot:
+    # 注册到spring-admin监控服务器
+    admin:
+      client:
+        url: "http://localhost:8000"
+# 配置spring-admin监控客户端,默认不开放监控检查接口,以下配置全部开放
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 #分页插件
 pagehelper:

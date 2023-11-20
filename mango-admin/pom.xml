@@ -37,10 +37,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
+
+        <!-- spring-boot-admin嵌套依赖 -->
+<!--         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-actuator</artifactId>
-        </dependency>
+        </dependency> -->
+
 
         <!-- swagger -->
         <dependency>
@@ -54,8 +57,7 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
-
+        
 
        <dependency>
            <groupId>org.springframework.boot</groupId>
@@ -72,9 +74,7 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.1</version>
         </dependency>
-    
-    
-    
+        
     
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -130,6 +130,14 @@
             <artifactId>kaptcha</artifactId>
             <version>2.3.2</version>
         </dependency>
+
+        <!-- 监控客户端,配置依赖才可注册到监控服务(mango-monitor),另外,yaml与swaggerConfig需要加入一些配置 -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
+            <version>2.7.13</version>
+        </dependency>
+
 
 
     </dependencies>
