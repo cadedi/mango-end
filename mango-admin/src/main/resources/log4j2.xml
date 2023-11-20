@@ -5,7 +5,8 @@
         <Console name="Console" target="SYSTEM_OUT">
             <!--只接受程序中DEBUG级别的日志进行处理-->
             <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
-            <PatternLayout pattern="[%d{HH:mm:ss.SSS}] %-5level %class{36} %L %M - %msg%xEx%n"/>
+            <!-- Log4j2默认关闭了Jansi（一个支持输出ANSI颜色的类库）,因此启用彩色日志需要添加jvm启动参数 -Dlog4j.skipJansi=false -->
+            <PatternLayout pattern="[%d{HH:mm:ss.SSS}] %-5level %highlight{%class{36}} %L %M - %msg%xEx%n"/>
         </Console>
         
         <!--处理DEBUG级别的日志，并把该日志放到logs/debug.log文件中-->

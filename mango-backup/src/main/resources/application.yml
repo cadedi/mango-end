@@ -8,6 +8,8 @@ spring:
     admin:
       client:
         url: "http://localhost:8000"
+        # 启用开关
+        #enabled: false
 # 配置spring-admin监控客户端,默认不开放监控检查接口,以下配置全部开放
 management:
   endpoints:

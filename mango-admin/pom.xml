@@ -25,6 +25,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <!-- 排除掉logging，不使用logback，改用log4j2 -->
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
