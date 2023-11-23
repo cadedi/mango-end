@@ -1,0 +1,25 @@
+server:
+  port: 8004
+spring:
+  application:
+    name: mango-producer #与mango-producer模块同名,为负载均衡用
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name} #注册到consul的服务名称
+  boot:
+    admin:
+      client:
+        url: "http://localhost:8000"
+
+# 配置spring-admin开放健康检查接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

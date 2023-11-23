@@ -1,0 +1,31 @@
+server:
+  port: 8005
+spring:
+  application:
+    name: mango-consumer
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name} #注册到consul的服务名称
+  boot:
+    admin:
+      client:
+        url: "http://localhost:8000"
+
+# 配置spring-admin开放健康检查接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+#当前项目不依赖ribbon,2020年的版本之后SpringCloud已把Ribbon移除,改为spring-cloud-loadBalancer,在配置类中配置策略
+#ribbon更改负载均衡策略
+#mango-producer: #已注册到注册中心(consul)的目标服务名,对该服务配置负载均衡策略(非必需,默认轮询策略)
+#  ribbon:
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule

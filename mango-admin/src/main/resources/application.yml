@@ -67,12 +67,15 @@ spring:
       discovery:
         service-name: ${spring.application.name} #注册到consul的服务名称
 
-# 配置spring-admin监控客户端,默认不开放监控检查接口,以下配置全部开放
+# 配置spring-admin开放健康检查接口
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  endpoint:
+    health:
+      show-details: always
 
 #分页插件
 pagehelper:
