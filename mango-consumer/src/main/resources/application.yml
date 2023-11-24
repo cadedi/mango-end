@@ -29,3 +29,8 @@ management:
 #mango-producer: #已注册到注册中心(consul)的目标服务名,对该服务配置负载均衡策略(非必需,默认轮询策略)
 #  ribbon:
 #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+feign:
+  # 服务熔断器sentinel(代替hystrix)
+  sentinel:
+    enabled: true
