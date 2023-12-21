@@ -16,6 +16,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
+/**
+ * 访问没有显式放行的接口直接访问返回403
+ * 测试账号admin 密码admin 无前端时至swagger页面访问验证码和登录接口获取token才可测试其它接口
+ */
 @Configuration
 @EnableWebSecurity  //开启spring security
 @EnableGlobalMethodSecurity(prePostEnabled = true)  //开启权限注解(如PreAuthorize)

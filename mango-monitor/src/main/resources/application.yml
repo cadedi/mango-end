@@ -3,9 +3,11 @@ server:
 spring:
   application:
     name: mango-monitor
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        service-name: ${spring.application.name} #注册到consul的服务名称
+#spring-boot-admin注册到注册中心不断报错java.io.IOException: 远程主机强迫关闭了一个现有的连接。(但不影响功能)
+#不注册,推测是服务发现使用的http连接与spring-boot-admin有冲突https://github.com/codecentric/spring-boot-admin/issues/497
+#  cloud:
+#    consul:
+#      host: localhost
+#      port: 8500
+#      discovery:
+#        service-name: ${spring.application.name} #注册到consul的服务名称

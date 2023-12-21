@@ -1,0 +1,99 @@
+server:
+  port: 8010
+spring:
+  application:
+    name: mango-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name} #注册到consul的服务名称
+        # 似乎是因为没有显式控制器接口不能通过服务中心的健康检查,配置打开心跳机制以解决
+        heartbeat:
+          enabled: true
+    # spring cloud gateway配置
+    # spring cloud gateway是服务网关(代替陈旧的zuul),将客户端请求统一转发给微服务
+    gateway:
+      discovery:
+        locator:
+          #是否与服务发现组件进行结合,通过service-id(必须设置成大写)转发到具体的服务实例。默认false
+          #为true代表开启基于服务发现的路由规则。
+          enabled: true
+          #配置之后访问时service-id无需大写
+          lower-case-service-id: true
+      # 默认情况下：gateway会根据注册中心上的微服务名为路径，创建动态路由进行转发，从而实现动态路由的功能。例如http://localhost:8010/mango-consumer/call可以访问到注册中心得到mango-consumer的服务
+      # 以下是手动配置
+      # 尝试访问http://localhost:8010/feign/call查看调用后端微服务效果
+
+      routes:
+        - id: feign-consumer-api
+          uri: lb://mango-consumer #lb前缀表示启用Gateway的负载均衡功能。lb://serviceName是spring cloud gateway在微服务中自动为我们创建的负载均衡uri
+          predicates:
+            - Path=/feign/**
+#          filters:
+#            - PrefixPath=/apiPrefix #给匹配的Path的前面补充一个前缀再发送给目标服务
+        - id: ribbon-consumer-api
+          uri: lb://mango-consumer #lb前缀表示启用Gateway的负载均衡功能。lb://serviceName是spring cloud gateway在微服务中自动为我们创建的负载均衡uri
+          predicates:
+            - Path=/ribbon/**
+          filters:
+            # 配置 CircuitBreaker filter 熔断器,方案:Resilience4J(导入依赖即可被识别并采用),也可采用Hystrix
+            # Sentinel与gateway的整合方式不基于Spring Cloud CircuitBreaker GatewayFilter Factory,与此不同(可同时基于配置和控制台)
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback
+            - name: RequestTime
+#          filters:
+#            - StripPrefix=1 #要删除的路径前缀数量(先与predicates匹配再去除)
+
+# 配置spring-admin开放健康检查接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+#resilience4j配置(全局配置configs与实例配置instances)
+#resilience4j:
+#  #超时机制
+#  timelimiter:
+#    configs:
+#      default:
+#        timeout-duration: 2000  # 纯数字毫秒级,也可加上后缀s表示秒级,如2s表示2秒超时,同2000
+#        delay: 50 #意义不明,似乎是定义TimeLimiter超时事件处理器时起作用
+#  #设置断路器,此处会有单词拼写警告,可以忽略
+#  circuitbreaker:
+#    configs:
+#      default: #设置断路器的默认实例
+#        failureRateThreshold: 30 #失败请求百分⽐为30%，超过这个⽐例，CircuitBreaker变为OPEN状态
+#        #状态收集器类型
+#        #COUNT_BASED：根据数量计算，slidingWindowSize为次数
+#        #TIME_BASED：根据时间计算，slidingWindowSize为秒数
+#        slidingWindowType: COUNT_BASED  #根据请求的数量进行统计
+#        slidingWindowSize: 10 #状态收集器⼤⼩，配置COUNT_BASED,表示10个请求，配置TIME_BASED表示10秒
+#        minimumNumberOfCalls: 5 #最⼩请求个数，只有在状态收集器中请求个数达到这个数，才会触发CircuitBreader对于断路器的判断
+#        #当CircuitBreaker处于HALF_OPEN状态的时候，允许通过的请求个数,并计算这些请求的失败率,如果低于设置就变为close状态,否则就变为open状态.
+#        permittedNumberOfCallsInHalfOpenState: 5
+#        automaticTransitionFromOpenToHalfOpenEnabled: true #设置true，表示⾃动从OPEN变成HALF_OPEN，即使没有请求过来
+#        #从OPEN到HALF_OPEN状态需要等待的时间,即熔断10s之后开始转变状态为HALF_OPEN,尝试重新连接服务
+#        waitDurationInOpenState: 10s
+#        recordExceptions: #异常名单,以下异常会被统计为失败名单,通常情况下所有异常都被计算进入失败名单.
+#          - java.lang.Exception
+#    instances: #配置熔断器实例
+#      backendA: #backendA,backendB是给熔断器实例取的名字
+#        baseConfig: default #熔断器backendA，继承默认配置default
+#      backendB:
+#        base-config: default
+#        failureRateThreshold: 30
+#        slowCallDurationThreshold: 2s #慢调用时间临界值，超过这个临界值的调用视为慢调用
+#        slowCallRateThreshold: 30 #慢调⽤百分⽐临界值，当慢调⽤⽐例⼤于这个临界值，断路器打开，并进⾏服务降级
+#        slidingWindowType: COUNT_BASED #状态收集器按照数量统计
+#        slidingWindowSize: 10 #统计10个请求
+#        minimumNumberOfCalls: 2
+#        permittedNumberOfCallsInHalfOpenState: 2
+#        waitDurationInOpenState: 2s #从OPEN到HALF_OPEN状态需要等待的时间

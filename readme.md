@@ -1,11 +1,15 @@
 
 启动consul，-dev表示开发模式运行，另外还有-server表示服务模式运行
-consul agent -dev
 
-spring-cloud-starter-openfeign 2020以后版本移除了ribbon(负载均衡器,替代品spring cloud loadBalancer) 和hystrix(服务熔断器,替代品sentinel)支持
-替代品
+`consul agent -dev`
 
+spring-cloud-starter-openfeign 2020以后版本移除了下列组件:
+* ribbon(负载均衡器,替代品spring cloud loadBalancer) 和
+* hystrix(服务熔断器,停止开发,替代品sentinel,resilience4j)支持
 
+mango-consumer集成sentinel
+mango-gateway集成resilience4j(与spring-cloud-gateway集成更方便)
+sentinel有独立的控制台,下载jar包运行即可启动控制台服务器,控制台也可以配置限流/熔断规则
 
 ## Description
 
@@ -13,4 +17,4 @@ This project is a derivative of [mango-platform](https://gitee.com/liuge1988/man
 
 ## License
 
-This project is licensed under the MIT (or Apache 2.0) license. See the LICENSE file for details.
+This project is licensed under the MIT (or Apache 2.0) license.

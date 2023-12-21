@@ -15,6 +15,8 @@ import org.springframework.web.client.RestTemplate;
  * 即可**自动调用loadBalancerClient**
  *  使用:
  *  **使用服务名(在consul注册的服务提供者)代替请求根地址**
+ *
+ *  ps: 事实上依赖的不是ribbon而是spring-cloud-loadBalancer
  */
 @RestController
 public class RibbonHelloController {
@@ -23,8 +25,9 @@ public class RibbonHelloController {
     private RestTemplate restTemplate;
 
     @RequestMapping("/ribbon/call")
-    public String call(){
+    public String call() throws InterruptedException {
         String callServiceResult = restTemplate.getForObject("http://mango-producer/hello", String.class);
+        // Thread.sleep(1);
         return callServiceResult;
     }
 }

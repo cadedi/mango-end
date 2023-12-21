@@ -9,6 +9,12 @@ spring:
       port: 8500
       discovery:
         service-name: ${spring.application.name} #注册到consul的服务名称
+    # 配置熔断器sentinel控制台,sentinel dashboard以jar包形式提供,直接运行
+    # Hystrix Dashboard与sentinel不同,是以依赖形式提供,需要集成到一个单独springboot项目再运行,并且只能监控单个服务,必需集成Turbine实现聚合监控
+    sentinel:
+      transport:
+        dashboard: localhost:8080 #dashboard地址
+        port: 8719 #与dashboard交互的端口号(注意不是项目的端口号),默认是8719
   boot:
     admin:
       client:
@@ -34,3 +40,4 @@ feign:
   # 服务熔断器sentinel(代替hystrix)
   sentinel:
     enabled: true
+
