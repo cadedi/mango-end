@@ -100,7 +100,7 @@
     <repositories>
         <repository>
             <id>public</id>
-            <name>aliyun nexus</name>
+            <name>huawei nexus</name>
             <url>https://mirrors.huaweicloud.com/repository/maven/</url>
             <releases>
                 <enabled>true</enabled>
