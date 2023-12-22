@@ -23,3 +23,17 @@ spring:
 # 如果使用本地存储配置方式而不是git,方式二:配置下面属性(注意是spring.profiles),config server会默认从resource目录下检索配置文件
 #  profiles:
 #    active: native
+
+  # 总线依赖rabbitmq
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+# 自动刷新是向服务端发送post请求(localhost:8020/actuator/busrefresh),故服务端需配置端口开放
+management:
+  endpoints:
+    web:
+      exposure:
+        include: busrefresh

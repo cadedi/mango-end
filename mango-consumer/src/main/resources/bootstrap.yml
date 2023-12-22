@@ -19,3 +19,10 @@ spring:
       name: consumer  #对应config接口格式中的{application}
       profile: dev  #对应config接口格式中的{profile}
       label: main #对应git分支,若配置中心服务端启用本地存储,则无用
+      fail-fast: true
+  # 总线依赖rabbitmq
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest

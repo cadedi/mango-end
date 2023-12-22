@@ -58,7 +58,16 @@ This project is a derivative of [mango-platform](https://gitee.com/liuge1988/man
   ![](https://raw.githubusercontent.com/cadedi/picto/main/img/202312220855811.png)
 
 * 配置中心 **spring cloud configs + spring cloud bus**
-  mango-config作为配置中心的服务端,负责将git仓库上的配置文件发布为restful接口
+  mango-config作为配置中心的服务端,负责将git仓库上(或某个存储位置,本地磁盘亦可以)的配置文件发布为restful接口
+
+  配置文件遵照范式命名,mango-config就会按指定的uri格式返回相应的配置数据
+  
+  由于一些微服务模块启动时需要读取配置中心配置,将与configs相关的客户端配置单独写在bootstrap.yaml中,它会先于application.yml被解析并向服务端读取配置
+  
+  客户端读取配置并初始化后不会自动向配置中心重新请求配置(但直接访问服务端的rest接口是会每次都更新的),若需要根据存储位置的配置文件改动刷新客户端配置,可以选择在客户端或服务端刷新配置
+  
+  * 客户端手动刷新:@RefreshScope + management.endpoints.web.exposure.include=refresh暴露端点,即可通过post接口: 客户端地址/actuator/refresh重新读取配置
+  * 服务端刷新:(客户端保留@RefreshScope)服务端配置bus + rabbitmq(服务端和客户端) + 服务端management.endpoints.web.exposure.include=busrefresh暴露端点,即可通过post接口: 服务端地址/actuator/busrefresh重新读取配置并通知客户端更新
 
 ## License
 
