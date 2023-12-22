@@ -1,0 +1,25 @@
+server:
+  port: 8020
+spring:
+  application:
+    name: mango-config
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name} #注册到consul的服务名称
+    config:
+      label: main #git 仓库分支
+      server:
+        git:
+          uri: https://github.com/cadedi/mango-end.git #git仓库的地址
+          search-paths: config-files
+#          username: xxxxx  #git仓库的账号(私有仓库)
+#          password: xxxxx  #git仓库的密码(私有仓库)
+# 如果使用本地存储配置方式而不是git,方式一:配置下面属性指定配置文件位置
+#        native:
+#          search-locations: file:D:/properties/
+# 如果使用本地存储配置方式而不是git,方式二:配置下面属性(注意是spring.profiles),config server会默认从resource目录下检索配置文件
+#  profiles:
+#    active: native

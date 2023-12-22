@@ -57,6 +57,9 @@ This project is a derivative of [mango-platform](https://gitee.com/liuge1988/man
   依次启动注册中心,生产者,消费者.....,当发生服务调用时,可以在[zipkin ui](http://localhost:9411/) 查看调用链上每个节点(引入了sleuth的)耗时
   ![](https://raw.githubusercontent.com/cadedi/picto/main/img/202312220855811.png)
 
+* 配置中心 **spring cloud configs + spring cloud bus**
+  mango-config作为配置中心的服务端,负责将git仓库上的配置文件发布为restful接口
+
 ## License
 
 This project is licensed under the MIT (or Apache 2.0) license.
