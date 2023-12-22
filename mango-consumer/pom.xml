@@ -84,7 +84,16 @@
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
 
-
+        <!--  配置中心客户端       -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+       <!-- 2020.X.X版本官方重构了bootstrap引导配置的加载方式，需要添加以下依赖,启用bootstrap.yml时才不会报错(No spring.config.import property has been defined...) -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
     </dependencies>
     
     <dependencyManagement>

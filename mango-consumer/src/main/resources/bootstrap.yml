@@ -1,0 +1,21 @@
+# 配置中心读取的配置应该先于application.yaml加载,故将注册中心与配置中心配置迁到另一个文件
+# spring-boot的默认读取配置文件顺序
+# bootstrap.yml（bootstrap.properties）用来在程序引导时执行，应用于更加早期配置信息读取，如可以使用来配置application.yml中使用到参数等
+#application.yml（application.properties) 应用程序特有配置信息，可以用来配置后续各个模块中需使用的公共参数等。
+#bootstrap.yml 先于 application.yml 加载
+spring:
+  application:
+    name: mango-config
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name} #注册到consul的服务名称
+    config:
+      discovery:
+        enabled: true #开启服务发现
+        service-id: mango-config #配置中心服务名词
+      name: consumer  #对应config接口格式中的{application}
+      profile: dev  #对应config接口格式中的{profile}
+      label: main #对应git分支,若配置中心服务端启用本地存储,则无用

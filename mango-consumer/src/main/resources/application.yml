@@ -4,11 +4,12 @@ spring:
   application:
     name: mango-consumer
   cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        service-name: ${spring.application.name} #注册到consul的服务名称
+# 注册中心相关配置与cloud-config应当先于当前文件读取,迁至另一个文件
+#    consul:
+#      host: localhost
+#      port: 8500
+#      discovery:
+#        service-name: ${spring.application.name} #注册到consul的服务名称
     # 配置熔断器sentinel控制台,sentinel dashboard以jar包形式提供,直接运行
     # Hystrix Dashboard与sentinel不同,是以依赖形式提供,需要集成到一个单独springboot项目再运行,并且只能监控单个服务,必需集成Turbine实现聚合监控
     sentinel:
